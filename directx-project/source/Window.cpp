@@ -10,7 +10,7 @@ Window::WindowClass::WindowClass() : m_HInstance (GetModuleHandleW(NULL)) {
 	wc.cbWndExtra = 0;
 	wc.hInstance = GetHInstance();
 	wc.hIcon = NULL;
-	wc.hCursor = NULL;
+	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
 	wc.hbrBackground = NULL;
 	wc.lpszMenuName = NULL;
 	wc.lpszClassName = GetName();
