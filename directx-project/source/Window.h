@@ -26,6 +26,9 @@ public:
 	Window() = delete;
 	Window(const Window&) = delete;
 	Window& operator=(const Window&) = delete;
+
+	void SetTitle(const wchar_t* title);
+
 private:
 	static LRESULT WINAPI MessageHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 

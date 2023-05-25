@@ -59,6 +59,10 @@ Window::~Window() {
 	DestroyWindow(m_HWnd);
 }
 
+void Window::SetTitle(const wchar_t* title) {
+	SetWindowText(m_HWnd, title);
+}
+
 LRESULT WINAPI Window::MessageHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	switch (uMsg) {
 	case WM_CLOSE:
