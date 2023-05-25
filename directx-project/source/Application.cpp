@@ -1,20 +1,20 @@
 #include "Window.h"
+#include <chrono>
 
 int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	Window window(800, 600, L"My oop window");
-	Window window2(1000, 200, L"Window 2");
+	Window window(800, 600, L"My window");
 
 	MSG msg;
-	BOOL bRet;
-	while (bRet = GetMessage(&msg, nullptr, 0, 0) > 0) {
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
-	}
-	if (bRet == -1) {
-		return -1;
-	}
-	else {
-		return (int)msg.wParam;
+
+	while (true) {
+		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
+			if (msg.message == WM_QUIT) {
+				return msg.wParam;
+			}
+
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
 	}
 }
