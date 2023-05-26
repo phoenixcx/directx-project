@@ -24,12 +24,18 @@
     <ClCompile Include="source\Timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\WindowsMessageMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Timer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\WindowsMessageMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

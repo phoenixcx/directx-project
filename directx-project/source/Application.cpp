@@ -16,7 +16,6 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
-
-		window.SetTitle(std::to_wstring(timer.GetDeltaTime()).c_str());
+		//window.SetTitle(std::to_wstring(timer.GetDeltaTime()).c_str());
 	}
 }

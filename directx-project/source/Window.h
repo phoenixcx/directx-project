@@ -30,7 +30,7 @@ public:
 	void SetTitle(const wchar_t* title);
 
 private:
-	static LRESULT WINAPI MessageHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK MessageHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 	RECT m_WindowRect;
 	HWND m_HWnd;

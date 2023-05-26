@@ -1,4 +1,5 @@
 #include "Window.h"
+#include "WindowsMessageMap.h"
 #include <sstream>
 
 Window::WindowClass::WindowClass() : m_HInstance (GetModuleHandleW(NULL)) {
@@ -63,7 +64,11 @@ void Window::SetTitle(const wchar_t* title) {
 	SetWindowText(m_HWnd, title);
 }
 
-LRESULT WINAPI Window::MessageHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+LRESULT CALLBACK Window::MessageHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+
+	static WindowsMessageMap wmm;
+	OutputDebugString(wmm(uMsg, lParam, wParam));
+
 	switch (uMsg) {
 	case WM_CLOSE:
 		PostQuitMessage(69);
