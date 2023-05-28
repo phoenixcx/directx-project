@@ -12,10 +12,12 @@ public:
 	Renderer(const Renderer&) = delete;
 	Renderer operator=(const Renderer&) = delete;
 
-	void Draw() const;
+	void ClearRenderTargetView();
+	void ShowFrame();
 
 private:
 	IDXGISwapChain* m_PSwapChain;
 	ID3D11Device* m_PDevice;
 	ID3D11DeviceContext* m_PDeviceContext;
+	ID3D11RenderTargetView* m_PRenderTargetView;
 };

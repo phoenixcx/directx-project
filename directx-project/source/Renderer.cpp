@@ -35,6 +35,16 @@ Renderer::Renderer(HWND hWnd)
 		NULL,
 		&m_PDeviceContext
 	);
+
+	ID3D11Resource* backBuffer;
+	m_PSwapChain->GetBuffer(0, __uuidof(ID3D11Resource), reinterpret_cast<void**>(&backBuffer));
+	if (backBuffer != nullptr) {
+		m_PDevice->CreateRenderTargetView(backBuffer, NULL, &m_PRenderTargetView);
+		backBuffer->Release();
+	}
+	else {
+		m_PRenderTargetView = nullptr;
+	}
 }
 
 Renderer::~Renderer() {
@@ -47,8 +57,16 @@ Renderer::~Renderer() {
 	if (m_PDeviceContext != nullptr) {
 		m_PDeviceContext->Release();
 	}
+	if (m_PRenderTargetView != nullptr) {
+		m_PRenderTargetView->Release();
+	}
 }
 
-void Renderer::Draw() const {
+void Renderer::ClearRenderTargetView() {
+	FLOAT color[4]{ 0.9f, 0.9f, 0.0f, 1.0f };
+	m_PDeviceContext->ClearRenderTargetView(m_PRenderTargetView, color);
+}
+
+void Renderer::ShowFrame() {
 	m_PSwapChain->Present(1u, 0u);
 }

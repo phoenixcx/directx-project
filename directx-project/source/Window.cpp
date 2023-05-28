@@ -66,7 +66,7 @@ Window::~Window() {
 	DestroyWindow(m_HWnd);
 }
 
-const Renderer* Window::GetRenderer() const {
+Renderer* Window::GetRenderer() const{
 	return m_Renderer;
 }
 

@@ -1,7 +1,7 @@
 #include "Window.h"
 #include "Timer.h"
 
-int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+int WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow)
 {
 	Window window(800, 600, L"My window");
 	Timer timer;
@@ -17,7 +17,8 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 			DispatchMessage(&msg);
 		}
 		else {
-			window.GetRenderer()->Draw();
+			window.GetRenderer()->ClearRenderTargetView();
+			window.GetRenderer()->ShowFrame();
 		}
 	}
 }

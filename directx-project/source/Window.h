@@ -28,7 +28,7 @@ public:
 	Window(const Window&) = delete;
 	Window& operator=(const Window&) = delete;
 
-	const Renderer* GetRenderer() const;
+	Renderer* GetRenderer() const;
 	void SetTitle(const wchar_t* title);
 
 private:
