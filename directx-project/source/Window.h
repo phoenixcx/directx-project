@@ -1,5 +1,6 @@
 #pragma once
 #include <Windows.h>
+#include "Renderer.h"
 
 class Window {
 private:
@@ -27,6 +28,7 @@ public:
 	Window(const Window&) = delete;
 	Window& operator=(const Window&) = delete;
 
+	const Renderer* GetRenderer() const;
 	void SetTitle(const wchar_t* title);
 
 private:
@@ -34,4 +36,6 @@ private:
 
 	RECT m_WindowRect;
 	HWND m_HWnd;
+
+	Renderer* m_Renderer;
 };

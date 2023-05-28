@@ -203,7 +203,7 @@ WindowsMessageMap::WindowsMessageMap()
 		})
 {}
 
-wchar_t* mystupidbuffername;
+wchar_t* buffer;
 
 const wchar_t* WindowsMessageMap::operator()(DWORD msg, LPARAM lp, WPARAM wp) const
 {
@@ -227,11 +227,11 @@ const wchar_t* WindowsMessageMap::operator()(DWORD msg, LPARAM lp, WPARAM wp) co
 	char t[1000];
 	strcpy(t, oss.str().c_str());
 
-	if (mystupidbuffername == nullptr) {
-		mystupidbuffername = new wchar_t[1000];
+	if (buffer == nullptr) {
+		buffer = new wchar_t[1000];
 	}
 
-	mbstowcs(mystupidbuffername, t, 1000);
+	mbstowcs(buffer, t, 1000);
 
-	return mystupidbuffername;
+	return buffer;
 }

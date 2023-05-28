@@ -2,6 +2,8 @@
 #include "WindowsMessageMap.h"
 #include <sstream>
 
+// WindowClass
+
 Window::WindowClass::WindowClass() : m_HInstance (GetModuleHandleW(NULL)) {
 	WNDCLASSEXW wc{};
 	wc.cbSize = sizeof(WNDCLASSEXW);
@@ -37,9 +39,10 @@ const HINSTANCE Window::WindowClass::GetHInstance() const {
 	return m_HInstance;
 }
 
+
+// Window
+
 Window::Window(int width, int height, const wchar_t* name) {
-
-
 	m_WindowRect.left = 0;
 	m_WindowRect.right = width;
 	m_WindowRect.top = 0;
@@ -54,10 +57,17 @@ Window::Window(int width, int height, const wchar_t* name) {
 		NULL, NULL, WindowClass::GetInstance().GetHInstance(), this);
 
 	ShowWindow(m_HWnd, SW_SHOW);
+
+	m_Renderer = new Renderer(m_HWnd);
 }
 
 Window::~Window() {
+	delete m_Renderer;
 	DestroyWindow(m_HWnd);
+}
+
+const Renderer* Window::GetRenderer() const {
+	return m_Renderer;
 }
 
 void Window::SetTitle(const wchar_t* title) {
@@ -66,12 +76,12 @@ void Window::SetTitle(const wchar_t* title) {
 
 LRESULT CALLBACK Window::MessageHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
-	static WindowsMessageMap wmm;
-	OutputDebugString(wmm(uMsg, lParam, wParam));
+	//static WindowsMessageMap wmm;
+	//OutputDebugString(wmm(uMsg, lParam, wParam));
 
 	switch (uMsg) {
 	case WM_CLOSE:
-		PostQuitMessage(69);
+		PostQuitMessage(0);
 		break;
 	case WM_KEYDOWN:
 		if (wParam == 'F') {

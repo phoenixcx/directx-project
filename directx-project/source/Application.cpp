@@ -10,12 +10,14 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	while (true) {
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
 			if (msg.message == WM_QUIT) {
-				return msg.wParam;
+				return static_cast<int>(msg.wParam);
 			}
 
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
-		//window.SetTitle(std::to_wstring(timer.GetDeltaTime()).c_str());
+		else {
+			window.GetRenderer()->Draw();
+		}
 	}
 }
