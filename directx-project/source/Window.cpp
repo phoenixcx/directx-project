@@ -2,6 +2,7 @@
 #include "WindowsMessageMap.h"
 #include <sstream>
 
+
 // WindowClass
 
 Window::WindowClass::WindowClass() : m_HInstance (GetModuleHandleW(NULL)) {

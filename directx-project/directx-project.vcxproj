@@ -168,12 +168,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
+    <ClCompile Include="source\Exception.cpp" />
     <ClCompile Include="source\Renderer.cpp" />
     <ClCompile Include="source\Timer.cpp" />
     <ClCompile Include="source\Window.cpp" />
     <ClCompile Include="source\WindowsMessageMap.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\Exception.h" />
     <ClInclude Include="source\Renderer.h" />
     <ClInclude Include="source\Timer.h" />
     <ClInclude Include="source\Window.h" />

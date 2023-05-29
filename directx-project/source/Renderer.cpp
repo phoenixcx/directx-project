@@ -1,4 +1,5 @@
 #include "Renderer.h"
+#include "Exception.h"
 
 Renderer::Renderer(HWND hWnd)
 {
