@@ -1,5 +1,6 @@
 #include "Window.h"
 #include "WindowsMessageMap.h"
+#include "Exception.h"
 #include <sstream>
 
 
@@ -59,7 +60,12 @@ Window::Window(int width, int height, const wchar_t* name) {
 
 	ShowWindow(m_HWnd, SW_SHOW);
 
-	m_Renderer = new Renderer(m_HWnd);
+	try {
+		m_Renderer = new Renderer(m_HWnd);
+	}
+	catch (const Exception& e) {
+		throw;
+	}
 }
 
 Window::~Window() {

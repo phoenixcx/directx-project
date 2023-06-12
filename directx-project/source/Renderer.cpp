@@ -1,5 +1,6 @@
 #include "Renderer.h"
 #include "Exception.h"
+#include <comdef.h>
 
 Renderer::Renderer(HWND hWnd)
 {
@@ -15,18 +16,17 @@ Renderer::Renderer(HWND hWnd)
 	scd.SampleDesc.Quality = 0;
 	scd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 	scd.BufferCount = 1;
-	scd.OutputWindow = hWnd;
+	scd.OutputWindow = NULL;
 	scd.Windowed = TRUE;
 	scd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 	scd.Flags = NULL;
 
-
-	D3D11CreateDeviceAndSwapChain
+	HRESULT res = D3D11CreateDeviceAndSwapChain
 	(
 		NULL,
 		D3D_DRIVER_TYPE_HARDWARE,
 		NULL,
-		D3D11_CREATE_DEVICE_BGRA_SUPPORT,
+		D3D11_CREATE_DEVICE_DEBUG,
 		NULL,
 		NULL,
 		D3D11_SDK_VERSION,
@@ -36,6 +36,10 @@ Renderer::Renderer(HWND hWnd)
 		NULL,
 		&m_PDeviceContext
 	);
+
+	if (res != S_OK) {
+		THROWHREXCEPT(res);
+	}
 
 	ID3D11Resource* backBuffer;
 	m_PSwapChain->GetBuffer(0, __uuidof(ID3D11Resource), reinterpret_cast<void**>(&backBuffer));
