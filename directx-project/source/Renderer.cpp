@@ -16,9 +16,9 @@ Renderer::Renderer(HWND hWnd)
 	scd.SampleDesc.Quality = 0;
 	scd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 	scd.BufferCount = 1;
-	scd.OutputWindow = NULL;
+	scd.OutputWindow = hWnd;
 	scd.Windowed = TRUE;
-	scd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
+	scd.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
 	scd.Flags = NULL;
 
 	HRESULT res = D3D11CreateDeviceAndSwapChain
@@ -31,10 +31,10 @@ Renderer::Renderer(HWND hWnd)
 		NULL,
 		D3D11_SDK_VERSION,
 		&scd,
-		&m_PSwapChain,
-		&m_PDevice,
+		&m_pSwapChain,
+		&m_pDevice,
 		NULL,
-		&m_PDeviceContext
+		&m_pDeviceContext
 	);
 
 	if (res != S_OK) {
@@ -42,36 +42,26 @@ Renderer::Renderer(HWND hWnd)
 	}
 
 	ID3D11Resource* backBuffer;
-	m_PSwapChain->GetBuffer(0, __uuidof(ID3D11Resource), reinterpret_cast<void**>(&backBuffer));
+	m_pSwapChain->GetBuffer(0, __uuidof(ID3D11Resource), reinterpret_cast<void**>(&backBuffer));
 	if (backBuffer != nullptr) {
-		m_PDevice->CreateRenderTargetView(backBuffer, NULL, &m_PRenderTargetView);
+		m_pDevice->CreateRenderTargetView(backBuffer, NULL, &m_pRenderTargetView);
 		backBuffer->Release();
 	}
 	else {
-		m_PRenderTargetView = nullptr;
+		m_pRenderTargetView = nullptr;
 	}
+
+	ID3D11InfoQueue* iq;
+	m_pDevice->QueryInterface(&iq);
 }
 
-Renderer::~Renderer() {
-	if (m_PSwapChain != nullptr) {
-		m_PSwapChain->Release();
-	}
-	if (m_PDevice != nullptr) {
-		m_PDevice->Release();
-	}
-	if (m_PDeviceContext != nullptr) {
-		m_PDeviceContext->Release();
-	}
-	if (m_PRenderTargetView != nullptr) {
-		m_PRenderTargetView->Release();
-	}
-}
+Renderer::~Renderer() {}
 
 void Renderer::ClearRenderTargetView() {
 	FLOAT color[4]{ 0.9f, 0.9f, 0.0f, 1.0f };
-	m_PDeviceContext->ClearRenderTargetView(m_PRenderTargetView, color);
+	m_pDeviceContext->ClearRenderTargetView(m_pRenderTargetView.Get(), color);
 }
 
 void Renderer::ShowFrame() {
-	m_PSwapChain->Present(1u, 0u);
+	m_pSwapChain->Present(1u, 0u);
 }
