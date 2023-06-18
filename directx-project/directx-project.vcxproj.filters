@@ -21,16 +21,16 @@
     <ClCompile Include="source\Window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Timer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\WindowsMessageMap.cpp">
+    <ClCompile Include="source\debug\WindowsMessageMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Exception.cpp">
+    <ClCompile Include="source\debug\Exception.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\debug\DXGIDebugInfo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -38,16 +38,16 @@
     <ClInclude Include="source\Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Timer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\WindowsMessageMap.h">
+    <ClInclude Include="source\debug\WindowsMessageMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Exception.h">
+    <ClInclude Include="source\debug\Exception.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\debug\DXGIDebugInfo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

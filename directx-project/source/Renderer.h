@@ -3,6 +3,7 @@
 #include <Windows.h>
 #include <wrl/client.h>
 #include <d3d11.h>
+#include "debug/DXGIDebugInfo.h"
 
 class Renderer {
 public:
@@ -21,4 +22,9 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11Device> m_pDevice;
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_pDeviceContext;
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_pRenderTargetView;
+
+#ifdef _DEBUG
+	HRESULT hException;
+	DXGIDebugInfo debugInfo;
+#endif
 };

@@ -1,5 +1,5 @@
 #include "Renderer.h"
-#include "Exception.h"
+#include "debug/Exception.h"
 #include <comdef.h>
 
 Renderer::Renderer(HWND hWnd)
@@ -18,10 +18,10 @@ Renderer::Renderer(HWND hWnd)
 	scd.BufferCount = 1;
 	scd.OutputWindow = hWnd;
 	scd.Windowed = TRUE;
-	scd.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
+	scd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 	scd.Flags = NULL;
 
-	HRESULT res = D3D11CreateDeviceAndSwapChain
+	DXGI_HR_CALL(D3D11CreateDeviceAndSwapChain
 	(
 		NULL,
 		D3D_DRIVER_TYPE_HARDWARE,
@@ -35,11 +35,7 @@ Renderer::Renderer(HWND hWnd)
 		&m_pDevice,
 		NULL,
 		&m_pDeviceContext
-	);
-
-	if (res != S_OK) {
-		THROWHREXCEPT(res);
-	}
+	));
 
 	ID3D11Resource* backBuffer;
 	m_pSwapChain->GetBuffer(0, __uuidof(ID3D11Resource), reinterpret_cast<void**>(&backBuffer));
@@ -50,9 +46,6 @@ Renderer::Renderer(HWND hWnd)
 	else {
 		m_pRenderTargetView = nullptr;
 	}
-
-	ID3D11InfoQueue* iq;
-	m_pDevice->QueryInterface(&iq);
 }
 
 Renderer::~Renderer() {}
@@ -63,5 +56,5 @@ void Renderer::ClearRenderTargetView() {
 }
 
 void Renderer::ShowFrame() {
-	m_pSwapChain->Present(1u, 0u);
+	DXGI_HR_CALL(m_pSwapChain->Present(1u, 0u));
 }

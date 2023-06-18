@@ -168,18 +168,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
-    <ClCompile Include="source\Exception.cpp" />
+    <ClCompile Include="source\debug\DXGIDebugInfo.cpp" />
+    <ClCompile Include="source\debug\Exception.cpp" />
     <ClCompile Include="source\Renderer.cpp" />
-    <ClCompile Include="source\Timer.cpp" />
     <ClCompile Include="source\Window.cpp" />
-    <ClCompile Include="source\WindowsMessageMap.cpp" />
+    <ClCompile Include="source\debug\WindowsMessageMap.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="source\Exception.h" />
+    <ClInclude Include="source\debug\DXGIDebugInfo.h" />
+    <ClInclude Include="source\debug\Exception.h" />
     <ClInclude Include="source\Renderer.h" />
-    <ClInclude Include="source\Timer.h" />
     <ClInclude Include="source\Window.h" />
-    <ClInclude Include="source\WindowsMessageMap.h" />
+    <ClInclude Include="source\debug\WindowsMessageMap.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
