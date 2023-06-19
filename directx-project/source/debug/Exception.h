@@ -28,13 +28,30 @@ private:
 	std::wstring m_FileAndLine;
 };
 
+class DXGIException : public Exception {
+public:
+	DXGIException(const char* file, int line, std::vector<std::string> errorStrings);
+	~DXGIException();
+
+	DXGIException() = delete;
+	DXGIException(const DXGIException&) = delete;
+	DXGIException& operator=(const DXGIException&) = delete;
+	DXGIException& operator=(DXGIException&&) = delete;
+
+	PCWSTR what() const override;
+	inline PCWSTR GetExceptionType() const noexcept override { return L"DXGI Exception"; }
+
+private:
+	std::vector<std::string> m_errorStrings;
+};
+
 class HRException : public Exception {
 public:
 	HRException(const char* file, int line, HRESULT hr);
 	~HRException();
 
 	HRException() = delete;
-	HRException(const Exception&) = delete;
+	HRException(const HRException&) = delete;
 	HRException& operator=(const HRException&) = delete;
 	HRException& operator=(HRException&&) = delete;
 
@@ -51,7 +68,7 @@ public:
 	~DXGIHRException();
 
 	DXGIHRException() = delete;
-	DXGIHRException(const Exception&) = delete;
+	DXGIHRException(const DXGIHRException&) = delete;
 	DXGIHRException& operator=(const DXGIHRException&) = delete;
 	DXGIHRException& operator=(DXGIHRException&&) = delete;
 
@@ -65,6 +82,7 @@ private:
 #define THROW_NO_INFO throw Exception(__FILE__, __LINE__)
 
 #ifdef _DEBUG
+#define DXGI_CALL(x) debugInfo.SetNextMessage(); x; errorStrings = debugInfo.GetErrorStrings(); if (!errorStrings.empty()) throw DXGIException(__FILE__, __LINE__, errorStrings)
 #define HR_CALL(x) hException = x; if (FAILED(hException)) throw HRException(__FILE__, __LINE__, hException)
 #define DXGI_HR_CALL(x) debugInfo.SetNextMessage(); hException = x; if (FAILED(hException)) throw DXGIHRException(__FILE__, __LINE__, hException, debugInfo)
 
@@ -72,6 +90,7 @@ private:
 
 // If _DEBUG is not defined
 #else
+#define DXGI_CALL(x) x
 #define HR_CALL(x) x
 #define DXGI_HR_CALL(x) x
 

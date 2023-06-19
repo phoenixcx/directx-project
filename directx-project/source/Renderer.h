@@ -29,5 +29,6 @@ private:
 #ifdef _DEBUG
 	HRESULT hException;
 	DXGIDebugInfo debugInfo;
+	std::vector<std::string> errorStrings;
 #endif
 };

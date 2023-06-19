@@ -23,6 +23,27 @@ std::wstring Exception::ReturnFileAndLine(const char* file, int line) const noex
 }
 
 
+// DXGIException
+
+DXGIException::DXGIException(const char* file, int line, std::vector<std::string> errorStrings)
+	: Exception(file, line), m_errorStrings(errorStrings) {}
+
+DXGIException::~DXGIException() {}
+
+PCWSTR DXGIException::what() const {
+	std::wostringstream woss;
+	woss << GetExceptionType() << L"\n\n" << GetFileAndLine() << L"\n\n";
+
+	woss << L"DXGI Errors:\n";
+	for (auto x : m_errorStrings) {
+		woss << std::wstring(x.begin(), x.end()) << L"\n";
+	}
+
+	m_WhatBuffer = woss.str();
+	return m_WhatBuffer.c_str();
+}
+
+
 // HRException
 
 HRException::HRException(const char* file, int line, HRESULT hr) : Exception(file, line), m_HR(hr) {}
@@ -51,6 +72,7 @@ PCWSTR HRException::what() const {
 	m_WhatBuffer = woss.str();
 	return m_WhatBuffer.c_str();
 }
+
 
 // DXGIHRException
 

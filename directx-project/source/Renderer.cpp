@@ -65,5 +65,37 @@ void Renderer::ShowFrame() {
 }
 
 void Renderer::DrawTriangle() {
+	struct Vertex {
+		float x;
+		float y;
+	};
+	
+	const Vertex vertices[]{
+		{ -0.5f, -0.5f },
+		{  0.0f,  0.5f },
+		{  0.5f, -0.5f }
+	};
 
+	Microsoft::WRL::ComPtr<ID3D11Buffer> pVertexBuffer;
+
+	D3D11_BUFFER_DESC bufferDesc;
+	bufferDesc.ByteWidth = sizeof(vertices);
+	bufferDesc.Usage = D3D11_USAGE_DEFAULT;
+	bufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	bufferDesc.CPUAccessFlags = 0u;
+	bufferDesc.MiscFlags = 0u;
+	bufferDesc.StructureByteStride = sizeof(Vertex);
+
+	D3D11_SUBRESOURCE_DATA data;
+	data.pSysMem = vertices;
+	data.SysMemPitch = 0u;
+	data.SysMemSlicePitch = 0u;
+
+	DXGI_HR_CALL(m_pDevice->CreateBuffer(&bufferDesc, &data, &pVertexBuffer));
+
+	UINT stride = sizeof(Vertex);
+	UINT offset = 0u;
+	DXGI_CALL(m_pDeviceContext->IASetVertexBuffers(0u, 1u, &pVertexBuffer, &stride, &offset));
+
+	DXGI_CALL(m_pDeviceContext->Draw(3u, 0u));
 }
