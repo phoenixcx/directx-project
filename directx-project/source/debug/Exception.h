@@ -62,14 +62,18 @@ private:
 	const DXGIDebugInfo& m_debugInfo;
 };
 
+#define THROW_NO_INFO throw Exception(__FILE__, __LINE__)
+
 #ifdef _DEBUG
 #define HR_CALL(x) hException = x; if (FAILED(hException)) throw HRException(__FILE__, __LINE__, hException)
-#define DXGI_CALL(x)
-#define DXGI_HR_CALL(x) hException = x; if (FAILED(hException)) throw DXGIHRException(__FILE__, __LINE__, hException, debugInfo); else debugInfo.SetNextMessage()
+#define DXGI_HR_CALL(x) debugInfo.SetNextMessage(); hException = x; if (FAILED(hException)) throw DXGIHRException(__FILE__, __LINE__, hException, debugInfo)
 
-#define THROW_NO_INFO throw Exception(__FILE__, __LINE__)
 #define TRY_THROW(x) try{ x; } catch (...) { throw; }
 
+// If _DEBUG is not defined
 #else
 #define HR_CALL(x) x
+#define DXGI_HR_CALL(x) x
+
+#define TRY_THROW(x) x
 #endif

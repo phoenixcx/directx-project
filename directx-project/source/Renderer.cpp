@@ -21,12 +21,17 @@ Renderer::Renderer(HWND hWnd)
 	scd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 	scd.Flags = NULL;
 
+	UINT flags = NULL;
+#ifdef _DEBUG
+	flags |= D3D11_CREATE_DEVICE_DEBUG;
+#endif
+
 	DXGI_HR_CALL(D3D11CreateDeviceAndSwapChain
 	(
 		NULL,
 		D3D_DRIVER_TYPE_HARDWARE,
 		NULL,
-		D3D11_CREATE_DEVICE_DEBUG,
+		flags,
 		NULL,
 		NULL,
 		D3D11_SDK_VERSION,
@@ -38,7 +43,7 @@ Renderer::Renderer(HWND hWnd)
 	));
 
 	ID3D11Resource* backBuffer;
-	m_pSwapChain->GetBuffer(0, __uuidof(ID3D11Resource), reinterpret_cast<void**>(&backBuffer));
+	DXGI_HR_CALL(m_pSwapChain->GetBuffer(0, __uuidof(ID3D11Resource), reinterpret_cast<void**>(&backBuffer)));
 	if (backBuffer != nullptr) {
 		m_pDevice->CreateRenderTargetView(backBuffer, NULL, &m_pRenderTargetView);
 		backBuffer->Release();
@@ -57,4 +62,8 @@ void Renderer::ClearRenderTargetView() {
 
 void Renderer::ShowFrame() {
 	DXGI_HR_CALL(m_pSwapChain->Present(1u, 0u));
+}
+
+void Renderer::DrawTriangle() {
+
 }

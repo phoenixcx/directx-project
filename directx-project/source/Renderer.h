@@ -17,12 +17,15 @@ public:
 	void ClearRenderTargetView();
 	void ShowFrame();
 
+	void DrawTriangle();
+
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain> m_pSwapChain;
 	Microsoft::WRL::ComPtr<ID3D11Device> m_pDevice;
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_pDeviceContext;
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_pRenderTargetView;
 
+	// For Exception macros
 #ifdef _DEBUG
 	HRESULT hException;
 	DXGIDebugInfo debugInfo;

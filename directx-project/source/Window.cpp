@@ -68,12 +68,12 @@ Window::~Window() {
 	DestroyWindow(m_HWnd);
 }
 
-Renderer* Window::GetRenderer() const{
+Renderer* Window::GetRenderer() const noexcept {
 	return m_Renderer;
 }
 
 void Window::SetTitle(const wchar_t* title) {
-	SetWindowText(m_HWnd, title);
+	SetWindowTextW(m_HWnd, title);
 }
 
 LRESULT CALLBACK Window::MessageHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
